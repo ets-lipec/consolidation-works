@@ -18,11 +18,7 @@ class Deck():
         
     def create_folder_structure(self):        
         self.plot_dirTemp = self.doc["Plot"]["Temp Output Folder"]
-        self.plot_dirDic = self.doc["Plot"]["Dic Output Folder"]
         check_folder_Temp = os.path.isdir(self.plot_dirTemp)
-        check_folder_Dic = os.path.isdir(self.plot_dirDic)
         if not check_folder_Temp:
               os.makedirs(self.plot_dirTemp)
-        if not check_folder_Dic:       
-              os.makedirs(self.plot_dirDic)
 
