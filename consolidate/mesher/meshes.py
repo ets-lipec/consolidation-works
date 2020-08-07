@@ -12,8 +12,6 @@ class MeshTwoPlates():
         self.set_density()
         self.set_specific_heat()
         self.set_diffusivity()
-        self.set_viscosity()   
-        self.set_dic()
         self.set_heat_density()
         
         
@@ -35,35 +33,28 @@ class MeshTwoPlates():
     
     def set_temperatures(self):
         T = np.zeros((self.ny, self.nx))        
-        T[0:self.ny1, 0:self.nx] = self.deck.doc["Materials"]["Material1"]["Initial Temperature"] # Set array size and set the interior value with Tini
-        T[self.ny1:self.ny, 0:self.nx] = self.deck.doc["Materials"]["Material2"]["Initial Temperature"] # Set array size and set the interior value with Tini
-        T[int(self.ny1), 1:-1] = self.deck.doc["Processing Parameters"]["Temperature"]
-        T[int(self.ny1+1), 1:-1] = self.deck.doc["Processing Parameters"]["Temperature"]
+        T[0:, 0:] = self.deck.doc["Materials"]["Aluminium"]["Initial Temperature"] # Set array size and set the interior value with Tini
         self.T = T.copy()
         self.T0=T.copy()
         
       
     def set_conductivity(self):
         KtotalX= np.zeros((self.ny, self.nx)) 
-        KtotalX[0:self.ny1, 0:self.nx] = self.deck.doc["Materials"]["Material1"]["Thermal Conductivity X"]
-        KtotalX[self.ny1:self.ny, 0:self.nx] = self.deck.doc["Materials"]["Material2"]["Thermal Conductivity X"]
+        KtotalX[0:, 0:] = self.deck.doc["Materials"]["Aluminium"]["Thermal Conductivity X"]
         self.KtotalX=KtotalX
                                                                                          
         KtotalY= np.zeros((self.ny, self.nx)) 
-        KtotalY[0:self.ny1, 0:self.nx] = self.deck.doc["Materials"]["Material1"]["Thermal Conductivity Y"]
-        KtotalY[self.ny1:self.ny, 0:self.nx] = self.deck.doc["Materials"]["Material2"]["Thermal Conductivity Y"]                                                                                       
+        KtotalY[0:, 0:] = self.deck.doc["Materials"]["Aluminium"]["Thermal Conductivity Y"]                                                                                    
         self.KtotalY=KtotalY         
 
     def set_density(self):
         RhoTotal= np.zeros((self.ny, self.nx)) 
-        RhoTotal[0:self.ny1, 0:self.nx] = self.deck.doc["Materials"]["Material1"]["Density"]
-        RhoTotal[self.ny1:self.ny, 0:self.nx] = self.deck.doc["Materials"]["Material2"]["Density"]                                                                                       
+        RhoTotal[0:, 0:] = self.deck.doc["Materials"]["Aluminium"]["Density"]                                                                                   
         self.RhoTotal=RhoTotal  
 
     def set_specific_heat(self):
         CpTotal= np.zeros((self.ny, self.nx)) 
-        CpTotal[0:self.ny1, 0:self.nx] = self.deck.doc["Materials"]["Material1"]["Cp"]
-        CpTotal[self.ny1:self.ny, 0:self.nx] = self.deck.doc["Materials"]["Material2"]["Cp"]                                                                                       
+        CpTotal[0:, 0:] = self.deck.doc["Materials"]["Aluminium"]["Cp"]                                                                                
         self.CpTotal=CpTotal  
 
     def set_diffusivity(self):                                                                                  
@@ -75,22 +66,14 @@ class MeshTwoPlates():
         DiffTotalY[0:,0:]=self.KtotalY[0:,0:]/(self.RhoTotal[0:,0:]*self.CpTotal[0:,0:])
         self.DiffTotalY = DiffTotalY.copy()
 
-    def set_viscosity(self):         
-        Visc=np.zeros((self.ny, self.nx))
-        Visc[0:, 0:]=1.14*10**(-12)*np.exp(26300/self.T[0:, 0:])
-        self.Visc=Visc.copy()
-
-    def set_dic(self):
-        Dic=np.ones((self.ny, self.nx))
-        self.dic=1/(1+0.45)
-        Dic[self.ny1-1:self.ny1+1,1:-1]=self.dic
-        self.Dic0=Dic.copy()
-        self.Dic=Dic.copy()   
-
 
     def set_heat_density(self):       
-        self.q=float(self.deck.doc["Processing Parameters"]["Power Density"])
+        self.q=float(self.deck.doc["Boundary Conditions"]["Power"])
         Q=np.zeros((self.ny, self.nx))
-        # Q[int(self.ny/2), 0:] = self.q
-        # Q[int(self.ny/2-1), 0:] = self.q
+        Q[0:, 0] = self.q
         self.Q=Q.copy()
+        
+        
+        
+        
+        
