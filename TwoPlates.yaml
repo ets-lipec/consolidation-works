@@ -1,33 +1,57 @@
 Problem Type:
     Type: TwoPlates
-    
+    Number of Domains: 3
 Geometry:
-    Length X: 0.2
-    Top Plate Thickness: 0.0016
-    Bottom Plate Thickness: 0.0016
-    HE: 0.0002   
+    Length X: 
+        Domain 1: 0.2
+        Domain 2: 0.2
+        Domain 3: 0.2
+    Length Y:
+        Domain 1: 0.0016
+        Domain 2: 0.0002
+        Domain 3: 0.0016  
+        
+Assembly:
+    Domain 1:
+        Offset X: 0
+        Offset Y: 0
+    Domain 2:
+        Offset X: 0
+        Offset Y: 0.0016
+    Domain 3:
+        Offset X: 0
+        Offset Y: 0.0018     
+Mesh:
+    Number of Elements in X:
+        Domain 1: 200
+        Domain 2: 200
+        Domain 3: 200
+    Number of Elements in Y:
+        Domain 1: 40
+        Domain 2: 1
+        Domain 3: 40
 Materials:
-  Top Adherent:
+  Domain 1:
     Thermal Conductivity X: 0.65
     Thermal Conductivity Y: 0.65
     Density: 1598
     Specific Heat Capacity: 930
-  HE:
+  Domain 2:
     Thermal Conductivity X: 0.65
     Thermal Conductivity Y: 0.65
     Density: 1598
     Specific Heat Capacity: 930  
-  Bottom Adherent:
+  Domain 3:
     Thermal Conductivity X: 0.65
     Thermal Conductivity Y: 0.65
     Density: 1598
     Specific Heat Capacity: 930
 
 Boundary Condition:
-    Initial Temperature Top Adherent: 293
-    Initial Temperature HE: 293
-    Initial Temperature Bottom Adherent: 293
-    Input Power Density: 261320300
+    Initial Temperature Domain 1: 293
+    Initial Temperature Domain 2: 293
+    Initial Temperature Domain 3: 293
+    Input Power Density: 2613203000
     Consolidation Pressure: 0.1
     Ideal Temperature: 648
     Room Temperature: 293
@@ -36,10 +60,6 @@ Boundary Condition:
 Simulation:
   Time Step: 0.0002
   Number Time Steps: 30001
-  Number of Elements X: 200
-  Number of Elements Bottom Plate Thickness: 40
-  Number of Elements HE: 1
-  Number of Elements Top Plate Thickness: 40
   
 
 Plot:
